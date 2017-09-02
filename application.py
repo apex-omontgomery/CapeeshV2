@@ -1,11 +1,27 @@
-import os
-from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash, jsonify, abort, Response
-from flask_sqlalchemy import SQLAlchemy
-from models import db, pick_words, word_table, query_all_words
+from flask import Flask, render_template, jsonify
+
+from models import db, pick_words
 
 application = Flask(__name__)
 application.config.from_object('config')
 db.init_app(application)
+
+'''
+1. Get five words- if don't have the audio of word- request it. 
+2. Ask how to spell or read
+2a. wait 5 seconds for response (exit, repeat, <some answer>
+2b. if response is seen in 5 seconds extend to 3 seconds. 
+
+3. Get google results, 
+
+
+
+
+'''
+
+
+
+
 
 # encode in rest_url, or post a body (html/ json) http post-> get a body
 @application.route('/')

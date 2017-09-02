@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import re
 import sys
 from google.cloud import speech
@@ -7,6 +6,8 @@ from google.cloud.speech import enums
 from google.cloud.speech import types
 import pyaudio
 import queue
+
+GOOGLE_APPLICATION_CREDENTIALS = r'C:\Users\wimo7\Desktop\Capeesh2\env\gsuite_speech.json'
 
 # Audio recording parameters
 RATE = 16000
@@ -125,6 +126,27 @@ def listen_print_loop(responses):
                 break
 
             num_chars_printed = 0
+
+def single_request():
+    language_code = 'en-US'  # a BCP-47 language tag
+    client = speech.SpeechClient()
+    config = types.RecognitionConfig(
+        encoding=enums.RecognitionConfig.AudioEncoding.LINEAR16,
+        sample_rate_hertz=RATE,
+        language_code=language_code)
+    streaming_config = types.StreamingRecognitionConfig(
+        config=config,
+        interim_results=True)
+
+    with MicrophoneStream(RATE, CHUNK) as stream:
+        audio_generator = stream.generator()
+        requests = (types.StreamingRecognizeRequest(audio_content=content)
+                    for content in audio_generator)
+
+        responses = client.streaming_recognize(streaming_config, requests)
+
+        # Now, put the transcription responses to use.
+        listen_print_loop(responses)
 
 
 def main():
