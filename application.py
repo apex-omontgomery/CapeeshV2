@@ -1,6 +1,5 @@
+from database.models import db, pick_words
 from flask import Flask, render_template, jsonify
-
-from models import db, pick_words
 
 application = Flask(__name__)
 application.config.from_object('config')

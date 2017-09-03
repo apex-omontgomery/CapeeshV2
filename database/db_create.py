@@ -1,10 +1,12 @@
 
-from migrate.versioning import api
+import os.path
+
+import ./app
 from config import SQLALCHEMY_DATABASE_URI
 from config import SQLALCHEMY_MIGRATE_REPO
-import app
-from models import db, pick_words, word_table, query_all_words
-import os.path
+from database.models import db
+from migrate.versioning import api
+
 
 @app.before_first_request
 def create_database():

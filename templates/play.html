@@ -1,0 +1,7 @@
+{% extends 'base2.html' %}
+{% block play %}
+        <audio autoplay>
+                <source src="static/music/{{ music_file }}" type="audio/mp3">
+                Your browser does not support this audio format.
+        </audio>
+{% endblock %}
